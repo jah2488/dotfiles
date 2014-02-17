@@ -1,0 +1,84 @@
+#!/usr/bin/env ruby
+Files      = Struct.new(:meth, :files)
+LIB        = Files.new(:lib,     Dir['lib/**/**/**'])
+SPECS      = Files.new(:spec,    Dir['spec/**/**/**'])
+FEATURES   = Files.new(:feature, Dir['features/**/**/**'])
+SLEEP_TIME = 1
+
+Signal.trap("INT") {
+  puts "Goodbye"
+  exit
+}
+
+
+def changed(chgd, trun)
+  puts "Found Change In: \033[32m#{chgd}\033[m"
+  puts "Running...       \033[34m#{trun}\033[m"
+end
+
+
+def lib(index)
+  file = LIB.files[index]
+  spec = SPECS.files.find { |f| !!(has_related?(file, f, ".rb", "_spec.rb")) }
+  runner :file => file, :run => spec
+end
+
+def spec(index)
+  runner :file => SPECS.files[index]
+end
+
+def runner(opts = {})
+  opts = opts.merge({:xtra => '--color --format doc', :cmd => 'rspec'})
+  changed(opts.fetch(:file), opts.fetch(:run))
+  puts "#{opts.fetch(:cmd)} #{opts.fetch(:run)} #{opts.fetch(:xtra)}"
+  system("#{opts.fetch(:cmd)} #{opts.fetch(:run)} #{opts.fetch(:xtra)}")
+end
+
+def feature(index)
+  file = feature = FEATURES.files[index]
+  if file.match(/step_definitions/)
+    feature = FEATURES.files.find { |f| !!(has_related?(file, f, "_steps.rb")) }
+  end
+  changed(file, feature)
+  system("cucumber #{feature}")
+end
+
+def has_related?(changed, potential, sub, replace = '')
+  changed   = changed  .split('/').last
+  potential = potential.split('/').last
+  changed.match(potential.gsub(sub, replace))
+end
+
+def run(obj)
+  if instance_variable_get("@#{obj.meth}")
+    file_timestamps(obj).each_with_index do |pair, index|
+      method(obj.meth).call(index) if pair.first != pair.last
+    end
+    instance_variable_set("@#{obj.meth}", nil)
+  else
+    instance_variable_set("@#{obj.meth}", mtime(obj))
+  end
+end
+
+def file_timestamps(obj)
+  instance_variable_get("@#{obj.meth}").zip(mtime(obj))
+end
+
+def mtime(obj)
+  obj.files.map { |f| File.mtime(f) }
+end
+
+
+i=3
+loop do
+  i = 1 if i > SLEEP_TIME; print "Waiting#{'.'*i}\r"; STDOUT.flush
+
+  [FEATURES, SPECS, LIB].each do |x|
+    run(x)
+  end
+
+  i+=1
+  sleep(SLEEP_TIME)
+end
+
+
