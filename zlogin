@@ -6,6 +6,8 @@ git_prompt_info() {
   fi
 }
 
+# when in a git repo directory.
+# check the local branch sha against the repo and show me
 git_status() {
   if [ -d .git ]; then
     LOCAL=$(git rev-parse --short @)
