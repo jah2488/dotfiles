@@ -13,9 +13,9 @@ git_status() {
     LOCAL=$(git rev-parse --short @)
     REMOTE=$(git rev-parse --short @{u})
     if [ $LOCAL = $REMOTE ]; then
-      echo "[%{$fg_bold[green]%}_%{$reset_color%}]"
+      echo "[%{$fg_bold[green]%}✔%{$reset_color%}]"
     else
-      echo "[%{$fg_bold[red]%}X%{$reset_color%}]"
+      echo "[%{$fg_bold[red]%}×%{$reset_color%}]"
     fi;
   fi;
 }
