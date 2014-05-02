@@ -32,7 +32,7 @@ ZSH_THEME="random"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rails ruby osx brew compleat jruby cp gem vi-mode)
+plugins=(git rails ruby osx brew compleat cp gem vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -48,7 +48,7 @@ autoload -U compinit
 compinit
 
 # automatically enter directories without cd
-setopt auto_cd
+#setopt auto_cd
 
 # use vim as an editor
 export EDITOR=vim
@@ -206,8 +206,13 @@ rw() {
   be rake routes | grep "$*"
 }
 
+vop() {
+  echo 'vim -o $(find * -type f | selecta)'
+  vim -o $(find * -type f | selecta)
+}
+
 #Haskell
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
+export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
 #ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.1-complete.jar:$CLASSPATH"
 
@@ -228,4 +233,8 @@ export RUBY_HEAP_FREE_MIN=500000
 
 #Haxe Path
 export HAXE_STD_PATH="/usr/local/lib/haxe/std"
+
+#Mono Path
+export MONO_GAC_PREFIX="/usr/local"
+
 

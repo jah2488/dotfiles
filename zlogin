@@ -6,20 +6,6 @@ git_prompt_info() {
   fi
 }
 
-# when in a git repo directory.
-# check the local branch sha against the repo and show me
-git_status() {
-  if [ -d .git ]; then
-    LOCAL=$(git rev-parse --short @)
-    REMOTE=$(git rev-parse --short @{u})
-    if [ $LOCAL = $REMOTE ]; then
-      echo "[%{$fg_bold[green]%}✔%{$reset_color%}]"
-    else
-      echo "[%{$fg_bold[red]%}×%{$reset_color%}]"
-    fi;
-  fi;
-}
-
 # makes color constants available
 autoload -U colors
 colors
@@ -31,7 +17,7 @@ export CLICOLOR=1
 setopt prompt_subst
 
 # prompt
-export PS1='$(git_prompt_info)$(git_status)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
+export PS1='$(git_prompt_info)[${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}] '
 
 
 ### Added by the Heroku Toolbelt
