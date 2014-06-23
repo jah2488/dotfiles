@@ -206,9 +206,27 @@ rw() {
   be rake routes | grep "$*"
 }
 
+#fuzzy find file to open in vim
 vop() {
   echo 'vim -o $(find * -type f | selecta)'
   vim -o $(find * -type f | selecta)
+}
+
+#fuzzy find process to kill by name
+fkill() {
+  echo 'ps | selecta | awk "{print $1}" | xargs kill'
+  ps | selecta | awk '{print $1}' | xargs kill
+}
+
+#Open all files that contain search term from ack in vim splits
+vack() {
+  echo 'vim -o `ack -l $SEARCHTERM`'
+  vim -o `ack -l $*`
+}
+
+#Open all files that match given pattern in current repo in vim splits
+vfind() {
+  vim -o `find . -name $*`
 }
 
 #Haskell

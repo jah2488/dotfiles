@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+abort "git url is required" if ARGV[0].nil?
+
+get_name_from_url = -> (url) {
+  repo_name_regex = %r{(?<=\/)(\S*)(?=.git)}
+  repo_name_regex.match(url).captures.first
+}
+
+REPO_URL = ARGV[0]
+NAME     = ARGV[1] || get_name_from_url[REPO_URL]
+
+
+cmd = "git clone #{REPO_URL} ~/.vim/bundle/#{NAME}"
+puts cmd
+system(cmd)
+
+exit(0)
