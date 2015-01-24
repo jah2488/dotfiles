@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+
+raise "Search Term Needed" if ARGV[0].nil?
+
+puts
+puts "Gathering your followers (who you don't follow back)"
+puts "[This may take awhile]"
+
+groupies = `t groupies --long --csv`
+
+puts
+puts "done gathering followers"
+puts
+
+csv = CSV.new(groupies, headers:true)
+
+people_with_bio = csv.map { |user| [ user["Screen name"], user["Bio"] ] }
+
+desired_users = people_with_bio.select { |user, bio| bio =~ Regexp.new(ARGV[0]) }.sort
+
+desired_users.each do |user, bio|
+  printf "%-20s - %s\n", user, bio.gsub("\n", '')
+end
+
+puts
+puts "Query returned #{desired_users.count} users"
+
+if desired_users.count > 0
+  puts "Do you wish to block all these users? (y/n)"
+
+  resp = $stdin.gets.chomp.downcase
+  if resp =~ /(y|yes)/
+    desired_users.each do |user, _|
+      `t block #{user}`
+      puts "#{user} was blocked"
+    end
+  end
+end

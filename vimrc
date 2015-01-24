@@ -79,6 +79,10 @@ autocmd Filetype haxe setlocal ts=4 sts=4 sw=4
 autocmd BufNewFile,BufRead *.cljs   set filetype=clojure
 autocmd BufNewFile,BufRead *.hiccup set filetype=clojure
 
+"Treat javascript template files like html
+autocmd BufNewFile,BufRead *.ejs set filetype=html
+autocmd BufNewFile,BufRead *.hbs set filetype=html
+
 " Set auto test run per filetype
 func! SetAutoTestOnSave()
   autocmd BufWritePost *.ex,*.exs !mix test
@@ -148,10 +152,15 @@ nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
+
+" Elm Shortcuts
+nnoremap <leader>el :ElmEvalLine<CR>
+vnoremap <leader>es :<C-u>ElmEvalSelection<CR>
+nnoremap <leader>ep :ElmPrintTypes<CR>
+nnoremap <leader>em :ElmMakeCurrentFile<CR>
+
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-
-
 
 " HAXE THINGS
 " munit tests
@@ -194,7 +203,7 @@ function! ToggleEnablePreview()
 endfunction
 
 """" neocomplete
-let g:neocomplcache_enable_at_startup = 1
+"turning of due to having youcomplete me now"let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_force_overwrite_completefunc = 1
 let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_min_syntax_length = 2
@@ -204,7 +213,7 @@ if !exists('g:neocomplcache_omni_patterns')
       let g:neocomplcache_omni_patterns = {}
 endif
 let g:neocomplcache_omni_patterns.ruby    = '[^. *\t]\.\w*\|\h\w*::'
-"let g:neocomplcache_omni_patterns.haxe    = '\v([\]''"]|\w)(\.|\()'
+"let g:neocomplcache_omni_patterns.haxe   = '\v([\]''"]|\w)(\.|\()'
 let g:neocomplcache_omni_patterns.haxe    = '\%([\]''") ]\|\w\)\%(\.\|(\)'
 let g:neocomplcache_omni_patterns.c   = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
@@ -260,6 +269,8 @@ autocmd vimenter * NERDTree | call feedkeys("\<C-\>\<C-n>\<c-w>l", 'n')
 "" Close vim when only open window is nerd tree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+let NERDTreeIgnore = ['(node_modules|bower_components)$']
+
 function! Toggle_Color_Scheme()
   if g:colors_name == "Tomorrow"
     colorscheme Tomorrow-Night-Eighties
@@ -294,15 +305,16 @@ let g:syntastic_enable_signs=1
 let g:syntastic_echo_current_error=1
 let g:syntastic_enable_balloons = 1
 
+let g:syntastic_javascript_checkers = ['jshint']
+
 let g:syntastic_error_symbol='✘'
 let g:syntastic_warning_symbol='☢'
-
 
 "Control-P
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/bower_components/*     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
 

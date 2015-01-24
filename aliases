@@ -58,6 +58,7 @@ alias db-backup-production='heroku pgbackups:capture --remote production'
 alias fcor='cd ~/Adept/patriots_fcor'
 
 # Custom
+alias h='cd ~/theironyard/homework'
 alias p='cd ~/projects'
 alias g='cd ~/projects/games'
 

@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+def roll(die = 6, amount = 1)
+  amount.times.map do
+    rand(1..die)
+  end
+end
+
+sides  = ARGV[0].to_i || 6
+if ARGV[1].to_i > 0
+  number = ARGV[1].to_i
+else
+  number = 1
+end
+
+puts roll(sides, number).inspect

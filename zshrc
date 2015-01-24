@@ -10,6 +10,7 @@ ZSH_THEME="random"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vim="mvim -v"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -32,7 +33,7 @@ ZSH_THEME="random"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rails ruby osx brew compleat cp gem vi-mode)
+#plugins=(git rails ruby osx brew compleat cp gem vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -127,7 +128,6 @@ setopt HIST_FIND_NO_DUPS
 #}}}
 
 export PATH=$PATH:$HOME/.rvm/bin
-
 export PATH=$PATH:~/android/android-sdk-macosx/tools
 export PATH=$PATH:~/android/android-sdk-macosx/platform-tools
 export ANDROID_HOME=~/android/android-sdk-macosx
@@ -229,10 +229,17 @@ vfind() {
   vim -o `find . -name $*`
 }
 
+serve() {
+  port="${1:-9000}"
+  ruby -run -e httpd . -p $port
+}
+
 #Haskell
 export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
 #ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.1-complete.jar:$CLASSPATH"
+#Elm
+export PATH=~/.cabal/bin:$PATH
 
 echo "Update Plugins? (y/n) "
 read   RESPONSE
@@ -254,5 +261,3 @@ export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 
 #Mono Path
 export MONO_GAC_PREFIX="/usr/local"
-
-
