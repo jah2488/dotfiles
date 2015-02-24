@@ -24,7 +24,7 @@ def lib(index)
 end
 
 def spec(index)
-  runner :file => SPECS.files[index]
+  runner :file => SPECS.files[index], :run => SPECS.files[index]
 end
 
 def runner(opts = {})

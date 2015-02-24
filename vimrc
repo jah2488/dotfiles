@@ -75,6 +75,10 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
 autocmd Filetype haxe setlocal ts=4 sts=4 sw=4
 
+"Treat Wisp and Lisp-ish files as Clojure
+autocmd BufNewFile,BufRead *.ls   set filetype=clojure
+autocmd BufNewFile,BufRead *.ws   set filetype=clojure
+
 "Treat Clojure-JS files as Clojure
 autocmd BufNewFile,BufRead *.cljs   set filetype=clojure
 autocmd BufNewFile,BufRead *.hiccup set filetype=clojure

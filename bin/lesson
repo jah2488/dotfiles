@@ -1,0 +1,100 @@
+#!/usr/bin/env ruby
+
+def get(prompt)
+  print " < " + prompt.capitalize + " > "
+  gets.chomp
+end
+
+puts "IRON YARD LESSON GENERATOR"
+
+date   = get('date')
+title  = get('title (optional)')
+topics = []
+loop do
+  response = get('topic (leave blank to skip)')
+  if response.empty?
+    break
+  else
+    topics << response
+  end
+end
+
+include_timeline = get('include timeline? (y/n)') == 'y'
+
+if include_timeline
+  timeline_sections = []
+  loop do
+    response = {}
+    response[:title]    = get('timeline piece title (leave blank to skip)')
+    break if response[:title].empty?
+    response[:duration] = get('timeline piece duration (optional)')
+    response[:subpoint] = get('timeline piece subpoint (optional)')
+    timeline_sections << response
+  end
+end
+
+assignments = []
+loop do
+  response = get('homework assignment description (leave blank to skip)')
+  break if response.empty?
+  assignments << response
+end
+
+FILE = <<-OUT
+##{date}
+###{title}
+
+#{timeline_sections.map { |section| "- #{section[:title]} (~#{section[:duration]})" + "\n  #{'- ' + section[:subpoint] if section[:subpoint]}" }.join("\n")}
+
+#Homework
+#{assignments.map { |assignment| "- #{assignment}" }.join("\n")}
+OUT
+
+puts FILE
+HW_FORMAT = <<-OUT
+# {{title}}
+
+## Description
+{{description}}
+
+
+## Objectives
+
+### Learning Objectives
+
+After completing this assignment, you should…
+
+* Understand some key concept
+
+
+### Performance Objectives
+
+After completing this assignment, you be able to effectively use
+
+* Use some tool or technique
+
+
+## Details
+
+### Deliverables
+
+* A repo containing at least:
+  * `foo.bar`
+
+### Requirements
+
+* ...
+
+{{> modes difficultyModes}}
+
+
+
+
+## Notes
+
+Notes go here...
+
+## Additional Resources
+
+* Read []()
+OUT
