@@ -1,7 +1,6 @@
 # Unix
 alias tlf="tail -f"
 alias ln='ln -v'
-alias mkdir='mkdir -p'
 alias ...='../..'
 alias l='ls'
 alias ll='ls -al'
@@ -61,6 +60,8 @@ alias fcor='cd ~/Adept/patriots_fcor'
 alias h='cd ~/theironyard/homework'
 alias p='cd ~/projects'
 alias g='cd ~/projects/games'
+alias c='cd ~/projects/theironyard/classroom'
+alias tiy='cd ~/theironyard'
 
 alias findit='find . | xargs grep -l'
 alias fg='find . | xargs grep -Csr 3'
