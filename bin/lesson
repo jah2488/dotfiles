@@ -1,100 +1,50 @@
 #!/usr/bin/env ruby
 
+def to_title(str)
+  str.to_s.split('_').map(&:capitalize).join(' ')
+end
+
 def get(prompt)
-  print " < " + prompt.capitalize + " > "
+  print " < #{to_title(prompt)} > "
   gets.chomp
 end
 
+def sec(name, opts: {})
+  opts = {
+    heading: 3,
+    text: "#{to_title(name)}\n",
+  }.merge(opts)
+  -> do
+    [
+      name,
+      -> x { ['#' * opts[:heading], opts[:text], x].join(' ') }
+    ]
+  end
+end
+
+HW = [
+  sec(:title, opts: { heading: 1, text: '' }),
+  sec(:description, opts: { heading: 2 }),
+  sec(:objectives, opts: { heading: 2 }),
+  sec(:learning_objectives),
+  sec(:performance_objectives),
+  sec(:details, opts: { heading: 2 }),
+  sec(:deliverables),
+  sec(:requirements),
+  sec(:easy_mode),
+  sec(:normal_mode),
+  sec(:hard_mode),
+  sec(:nightmare_mode),
+  sec(:notes),
+  sec(:additional_resource),
+].map(&:call).to_h
+
 puts "IRON YARD LESSON GENERATOR"
 
-date   = get('date')
-title  = get('title (optional)')
-topics = []
-loop do
-  response = get('topic (leave blank to skip)')
-  if response.empty?
-    break
-  else
-    topics << response
-  end
-end
+puts "\n", '-' * `tput cols`.to_i, 
+    HW.map { |name,  section| [section, get(name)] }
+      .map { |section, input| section.call(input)  }
+      .join("\n"), 
+    '-' * `tput cols`.to_i, "\n"
 
-include_timeline = get('include timeline? (y/n)') == 'y'
-
-if include_timeline
-  timeline_sections = []
-  loop do
-    response = {}
-    response[:title]    = get('timeline piece title (leave blank to skip)')
-    break if response[:title].empty?
-    response[:duration] = get('timeline piece duration (optional)')
-    response[:subpoint] = get('timeline piece subpoint (optional)')
-    timeline_sections << response
-  end
-end
-
-assignments = []
-loop do
-  response = get('homework assignment description (leave blank to skip)')
-  break if response.empty?
-  assignments << response
-end
-
-FILE = <<-OUT
-##{date}
-###{title}
-
-#{timeline_sections.map { |section| "- #{section[:title]} (~#{section[:duration]})" + "\n  #{'- ' + section[:subpoint] if section[:subpoint]}" }.join("\n")}
-
-#Homework
-#{assignments.map { |assignment| "- #{assignment}" }.join("\n")}
-OUT
-
-puts FILE
-HW_FORMAT = <<-OUT
-# {{title}}
-
-## Description
-{{description}}
-
-
-## Objectives
-
-### Learning Objectives
-
-After completing this assignment, you should…
-
-* Understand some key concept
-
-
-### Performance Objectives
-
-After completing this assignment, you be able to effectively use
-
-* Use some tool or technique
-
-
-## Details
-
-### Deliverables
-
-* A repo containing at least:
-  * `foo.bar`
-
-### Requirements
-
-* ...
-
-{{> modes difficultyModes}}
-
-
-
-
-## Notes
-
-Notes go here...
-
-## Additional Resources
-
-* Read []()
-OUT
+gets

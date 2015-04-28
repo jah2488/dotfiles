@@ -1,0 +1,28 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/Users/Justin/projects/theironyard/classroom/app/" . "controllers/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/Users/Justin/projects/theironyard/classroom/app/controllers/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "checkins_controller.rb"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/Users/Justin/projects/theironyard/classroom/app/controllers/" (21802 31648 0 0) "welcome_controller.rb" "submissions_controller.rb" "students_controller.rb" "instructor_dashboard_controller.rb" "days_controller.rb" "dashboard_controller.rb" "concerns/" "cohorts_controller.rb" "checkins_controller.rb" "assignments_controller.rb" "application_controller.rb" ".checkins_controller.rb.swp" "../" "./")
+
+ ("/Users/Justin/projects/theironyard/classroom/app/" (21786 58012 0 0) "views/" "models/" "mailers/" "helpers/" "controllers/" "assets/" "../" "./")
+
+ ("/Users/Justin/projects/theironyard/classroom/" (21814 39348 0 0) "vendor/" "tmp/" "test/" "spec/" "README.rdoc" "Rakefile" "public/" "Procfile" "log/" "lib/" "Gemfile.lock" "Gemfile" "db/" "config.ru" "config/" "bin/" "app/" ".rspec" ".gitignore" ".git/" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t
