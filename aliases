@@ -59,6 +59,7 @@ alias db-backup-production='heroku pgbackups:capture --remote production'
 alias fcor='cd ~/Adept/patriots_fcor'
 
 # Custom
+alias tm='cd ~/theironyard/may'
 alias h='cd ~/theironyard/homework'
 alias p='cd ~/projects'
 alias g='cd ~/projects/games'
@@ -69,6 +70,8 @@ alias findit='find . | xargs grep -l'
 alias fg='find . | xargs grep -Csr 3'
 alias sz='source ~/.zshrc'
 alias ez='vim ~/.zshrc'
+alias ev='vim ~/.vimrc'
+alias ea='vim ~/.aliases'
 alias mk=popd
 
 alias puts='man -t "$1" | open -f -a Preview'

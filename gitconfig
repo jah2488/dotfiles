@@ -4,7 +4,7 @@
   pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
 [user]
 	name = Justin Herrick
-	email = justin@justinherrick.com
+	email = justin@theironyard.com
 
 [color]
 	ui = auto
@@ -40,3 +40,5 @@
 	trustExitCode = true
 [apply]
 	whitespace = nowarn
+[credential]
+	helper = osxkeychain
