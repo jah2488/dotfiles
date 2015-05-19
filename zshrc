@@ -5,30 +5,11 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="random"
+ZSH_THEME="mh"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="mvim -v"
+alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Comment this out to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -37,9 +18,13 @@ alias vim="mvim -v"
 
 source $ZSH/oh-my-zsh.sh
 
+#source ~/._rust
+
 # Customize to your needs...
 fpath=(~/.zsh/completion $fpath)
 
+#allow comments
+setopt interactivecomments
 
 # beeps are annoying
 setopt NO_BEEP
@@ -106,7 +91,8 @@ setopt HIST_IGNORE_DUPS
 setopt histignoredups
 
 # Even if there are commands inbetween commands that are the same, still only save the last one
-setopt HIST_IGNORE_ALL_DUPS
+# For dealing with students I may want repeats out of order
+# setopt HIST_IGNORE_ALL_DUPS
 
 # Pretty    Obvious.  Right?
 setopt HIST_REDUCE_BLANKS
@@ -127,11 +113,9 @@ setopt HIST_FIND_NO_DUPS
 
 #}}}
 
-export PATH=$PATH:$HOME/.rvm/bin
 export PATH=$PATH:~/android/android-sdk-macosx/tools
 export PATH=$PATH:~/android/android-sdk-macosx/platform-tools
 export ANDROID_HOME=~/android/android-sdk-macosx
-
 
 # look for ey config in project dirs
 export EYRC=./.eyrc
@@ -155,10 +139,7 @@ setopt EXTENDED_GLOB
 fpath=($HOME/.zsh/func $fpath)
 typeset -U fpath
 
-
 # Load RVM function
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
-
 
 #Get size of given directory
 #no directory given defaults to current directory;
@@ -171,7 +152,6 @@ sizeOf() {
   fi
 }
 
-
 #Execute code inside rails console then exit.
 rce() {
   expect -c "
@@ -182,7 +162,6 @@ rce() {
     send \"exit\r\n\";
     set timeout -1;"
 }
-
 
 #Create Command based on last command
 new_command() {
@@ -204,6 +183,10 @@ new_command() {
 rw() {
   echo 'be rake routes | grep $*'
   be rake routes | grep "$*"
+}
+
+rails_new() {
+  echo 'rails new should run'
 }
 
 #fuzzy find file to open in vim
@@ -234,6 +217,38 @@ serve() {
   ruby -run -e httpd . -p $port
 }
 
+hist-log() {
+  tail -f ~/.history | sed 's/^.*;/ /'
+}
+
+last-out() {
+  tail -n 1 ~/.hist-out
+}
+
+anim-img() {
+  mkdir /tmp/anim-img && convert -coalesce $1 /tmp/anim-img/out%05d.png && for f in /tmp/anim-img/*; do printf '\e[H'; imgcat $f; done && rm -rf /tmp/anim-img/
+}
+
+
+#display markdown file in terminal; requires https://www.npmjs.com/package/nd
+cat-md() {
+  cat $1 | nd
+}
+
+#open-app Completions {
+_open-app_complete() {
+  local word completions
+  word="$1"
+  completions="$(open-app --auto-complete "${word}")"
+  reply=( "${(ps:\n:)completions}" )
+}
+compctl -K _open-app_complete open-app
+#} open-app Completions
+
+
+#local bin/git
+export PATH=~/.bin:~/.bin/git-2.2.1:$PATH
+
 #Haskell
 export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
 #ANTLR
@@ -261,3 +276,24 @@ export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 
 #Mono Path
 export MONO_GAC_PREFIX="/usr/local"
+
+eval "$(homework setup -)"
+
+
+
+source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. `brew --prefix`/etc/profile.d/z.sh
+
+
+export PATH=~/bin:$PATH
+
+
+
+alias sz="source ~/.zshrc"
+alias ez="subl ~/.zshrc"
+
+
+
+export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+rvm use 2.2.0
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
