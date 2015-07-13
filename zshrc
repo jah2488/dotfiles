@@ -5,10 +5,30 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="mh"
+ZSH_THEME="fox"
 
 alias vim="mvim -v"
 alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
+
+# What week/day in the cohort are we
+export WEEK='8'
+export DAY='4'
+set-today() {
+  export WEEK=$1
+  export DAY=$2
+}
+set-week() {
+  export WEEK=$1
+}
+set-day() {
+  export DAY=$1
+}
+gtd() {
+  cd ${HOME}'/theironyard/may/week'${WEEK}'/day'${DAY}'/'
+}
+gt() {
+  cd ${HOME}'/theironyard/may/week'$1'/day'$2'/'
+}
 
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
@@ -66,6 +86,27 @@ bindkey '\e[B' history-search-forward
 
 # expand functions in the prompt
 setopt prompt_subst
+
+
+#ALL THE COLORS
+export TERM='xterm-256color'
+
+function powerline_precmd() {
+  export PS1="$(~/.zsh/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
+}
+
+function install_powerline_precmd() {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
+    fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
+install_powerline_precmd
+
+
 
 #{{{ History Stuff
 
@@ -139,7 +180,14 @@ setopt EXTENDED_GLOB
 fpath=($HOME/.zsh/func $fpath)
 typeset -U fpath
 
-# Load RVM function
+
+#make ruby project scaffold
+proj.rb() {
+  mkdir lib bin spec;
+  touch readme.md
+  touch spec/spec_helper.rb
+}
+
 
 #Get size of given directory
 #no directory given defaults to current directory;
@@ -185,10 +233,6 @@ rw() {
   be rake routes | grep "$*"
 }
 
-rails_new() {
-  echo 'rails new should run'
-}
-
 #fuzzy find file to open in vim
 vop() {
   echo 'vim -o $(find * -type f | selecta)'
@@ -229,10 +273,34 @@ anim-img() {
   clear && mkdir /tmp/anim-img && convert -coalesce $1 /tmp/anim-img/out%05d.png && for f in /tmp/anim-img/*; do printf '\e[H'; imgcat $f; done && rm -rf /tmp/anim-img/
 }
 
+mkcd() {
+  mkdir -p $1 && cd $1
+}
 
 #display markdown file in terminal; requires https://www.npmjs.com/package/nd
 cat-md() {
   cat $1 | nd
+}
+
+#Hide all desktop icons/files/folders
+hide-desktop() {
+  defaults write com.apple.finder CreateDesktop -bool false && killall Finder;
+}
+#Hide all desktop icons/files/folders
+show-desktop() {
+  defaults write com.apple.finder CreateDesktop -bool true && killall Finder;
+}
+
+alias chrome='/usr/bin/open -a "/Applications/Google Chrome.app"'
+alias themoreyouknow="chrome 'http://ak-hdl.buzzfed.com/static/2015-02/1/20/enhanced/webdr02/anigif_enhanced-buzz-20392-1422840785-34.gif'"
+alias tmyk='themoreyouknow'
+
+google() {
+  chrome 'http://google.com?q='$1
+}
+
+lmgtfy() {
+  chrome 'http://lmgtfy.com/?q='$1
 }
 
 #open-app Completions {
@@ -248,7 +316,6 @@ compctl -K _open-app_complete open-app
 
 #local bin/git
 export PATH=~/.bin:~/.bin/git-2.2.1:$PATH
-
 #Haskell
 export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
 #ANTLR
@@ -279,21 +346,17 @@ export MONO_GAC_PREFIX="/usr/local"
 
 eval "$(homework setup -)"
 
-
-
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . `brew --prefix`/etc/profile.d/z.sh
 
+rails-t () {
+  rails new $1 -d=postgresql -m https://raw.githubusercontent.com/tiy-austin-ror-may2015/tiy-template/master/template.rb
+}
+
+# Remove right prompt
+export RPROMPT=''
+export COMMAND_PROMPT='hi'
 
 export PATH=~/bin:$PATH
-
-
-
-alias sz="source ~/.zshrc"
-alias ez="subl ~/.zshrc"
-
-
-
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
-rvm use 2.2.0
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

@@ -5,10 +5,38 @@ set history=200
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
-set vb " NO BELLS
+set vb            " NO BELLS
 set laststatus=2  " Always display the status line
-set mousefocus "gvim mouse select pane
+set mousefocus    "gvim mouse select pane
 set shell=/bin/sh "Ensure that vim always runs from a shell https://rvm.io/integration/vim
+
+""" FOR POWER/AIR/STATUSLINE
+set encoding=utf-8 " Necessary to show Unicode glyphs
+set guifont=Menlo\ For\ Powerline
+let g:airline_powerline_fonts=1
+" powerline symbols
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+
+
+let g:javascript_conceal_function   = "ƒ"
+let g:javascript_conceal_null       = "ø"
+let g:javascript_conceal_this       = "@"
+let g:javascript_conceal_return     = "⇚"
+let g:javascript_conceal_undefined  = "¿"
+let g:javascript_conceal_NaN        = "ℕ"
+let g:javascript_conceal_prototype  = "¶"
+let g:javascript_conceal_static     = "•"
+let g:javascript_conceal_super      = "Ω"
 
 
 " Treat Underscores as Keywords such that hitting e and b will jump to the

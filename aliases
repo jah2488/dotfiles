@@ -15,6 +15,12 @@ alias du='du -h'
 # git
 alias g="git"
 alias gci="git pull --rebase && rake && git push"
+alias go='git open'
+
+# Langs
+alias rb='ruby'
+alias py='python'
+alias js='node'
 
 # Ruby
 alias help-strftime='ruby ~/bin/help-strftime.rb'
@@ -59,12 +65,16 @@ alias db-backup-production='heroku pgbackups:capture --remote production'
 alias fcor='cd ~/Adept/patriots_fcor'
 
 # Custom
+alias Trash='cd ~/.Trash/'
+alias parrot="cd ~/projects/parrot"
 alias tm='cd ~/theironyard/may'
 alias h='cd ~/theironyard/homework'
 alias p='cd ~/projects'
 alias g='cd ~/projects/games'
 alias c='cd ~/projects/theironyard/classroom'
+alias s='cd ~/projects/theironyard/screencasts'
 alias tiy='cd ~/theironyard'
+alias tir='echo "tiy-austin-ror-may2015"'
 
 alias findit='find . | xargs grep -l'
 alias fg='find . | xargs grep -Csr 3'

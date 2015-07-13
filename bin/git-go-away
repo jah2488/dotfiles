@@ -12,23 +12,12 @@
 
 exec /usr/bin/env ruby --disable-gems -x "$0" $*
 #!ruby
+  #
+path_to_submodule = ARGV[0]
 
-def not_enough_args; puts "No APP_NAME supplied", "Usage: \n  open-app APP_NAME (required)" end
-
-def open_app(name)
-  #TODO: Search inside matching folders
-  `open /Applications/#{name}.app`
-end
-
-if ARGV[0] == '--auto-complete'
-  apps = Dir['/Applications/*'].map { |x| x[14..-1].gsub('.app', '') }
-  completions = apps.grep(/^#{Regexp.escape((ARGV[1]|| ''))}/i)
-  puts completions
+if Dir.exists?(path_to_submodule)
+  `rm -rf #{path_to_submodule}/.git` if Dir.exists?("#{path_to_submodule}/.git")
+  `git rm --cached #{path_to_submodule}`
 else
-  if ARGV.length < 1
-    not_enough_args
-  else
-    open_app(ARGV[0])
-  end
+  puts 'Path does not exist'
 end
-
