@@ -68,13 +68,22 @@ alias fcor='cd ~/Adept/patriots_fcor'
 alias Trash='cd ~/.Trash/'
 alias parrot="cd ~/projects/parrot"
 alias tm='cd ~/theironyard/may'
+alias ta='cd ~/theironyard/aug'
 alias h='cd ~/theironyard/homework'
 alias p='cd ~/projects'
 alias g='cd ~/projects/games'
-alias c='cd ~/projects/theironyard/classroom'
+alias c='cd ~/projects/theironyard/products/classroom'
 alias s='cd ~/projects/theironyard/screencasts'
+alias ir='cd ~/projects/invent/invent-rails'
 alias tiy='cd ~/theironyard'
-alias tir='echo "tiy-austin-ror-may2015"'
+alias tir='echo "tiy-austin-ror"'
+alias note='echo "$1" >> readme.md'
+alias mit='cd ~/Desktop/jherrick-old/8thLight/mit'
+
+
+# EC2
+alias ssh-lsm-redis="ssh -i "LSM-Key.pem" ubuntu@54.86.27.170"
+alias ssh-lsm-node="ssh -i "LSM-Key.pem" ubuntu@54.172.0.198"
 
 alias findit='find . | xargs grep -l'
 alias fg='find . | xargs grep -Csr 3'

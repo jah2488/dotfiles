@@ -1,9 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/Justin/Desktop/jherrick-old/8thLight/hosemonster'
-let g:netrw_dirhist_2='/Users/Justin/Projects/javascript/trackr'
-let g:netrw_dirhist_3='/Users/Justin/.dotfiles/vim/bundle'
-let g:netrw_dirhist_4='/Users/Justin/Projects/rb/sync'
-let g:netrw_dirhist_5='/Users/Justin/Projects/parrot'
-let g:netrw_dirhist_6='/Users/Justin/.rvm/gems/ruby-2.2.0/gems/artoo-ardrone-1.4.0'
-let g:netrw_dirhist_7='/Users/Justin/.rvm/gems/ruby-2.2.0/gems/hybridgroup-argus-0.5.1'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/Justin/.rvm/gems/ruby-2.2.3/gems/rails-assets-chriso--validator.js-4.2.0'
+let g:netrw_dirhist_2='/Users/Justin/.rvm/gems/ruby-2.2.3/gems/rails-assets-qwest-2.2.2'
+let g:netrw_dirhist_3='/Users/Justin/.rvm/gems/ruby-2.2.3/gems/middleman-blog-3.5.3'

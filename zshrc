@@ -5,14 +5,22 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="fox"
+ZSH_THEME="avit"
+export VISUAL='vim'
 
 alias vim="mvim -v"
 alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
 
+
+mkdircd() {
+  mkdir -p -- "$1" && cd -P -- "$1"
+}
+
 # What week/day in the cohort are we
-export WEEK='8'
-export DAY='4'
+export COHORT='feb'
+export WEEK='1'
+export DAY='1'
+
 set-today() {
   export WEEK=$1
   export DAY=$2
@@ -24,10 +32,10 @@ set-day() {
   export DAY=$1
 }
 gtd() {
-  cd ${HOME}'/theironyard/may/week'${WEEK}'/day'${DAY}'/'
+  mkdircd ${HOME}'/theironyard/'${COHORT}'/week'${WEEK}'/day'${DAY}'/'
 }
 gt() {
-  cd ${HOME}'/theironyard/may/week'$1'/day'$2'/'
+  mkdircd ${HOME}'/theironyard/'${COHORT}'/week'$1'/day'$2'/'
 }
 
 
@@ -91,20 +99,21 @@ setopt prompt_subst
 #ALL THE COLORS
 export TERM='xterm-256color'
 
-function powerline_precmd() {
-  export PS1="$(~/.zsh/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
-}
-
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
-install_powerline_precmd
+# POWERLINE ZSH THEME
+#function powerline_precmd() {
+#  export PS1="$(~/.zsh/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
+#}
+#
+#function install_powerline_precmd() {
+#  for s in "${precmd_functions[@]}"; do
+#    if [ "$s" = "powerline_precmd" ]; then
+#      return
+#    fi
+#  done
+#  precmd_functions+=(powerline_precmd)
+#}
+#
+#install_powerline_precmd
 
 
 
@@ -326,7 +335,7 @@ export PATH=~/.cabal/bin:$PATH
 echo "Update Plugins? (y/n) "
 read   RESPONSE
 if [ "$RESPONSE" = "y" ]; then
-   echo "Updating homebrew, vim plugins, haxelib, and rvm "; brew update; sh ~/update_vim_plugins.sh; haxelib upgrade; rvm get stable;
+   echo "Updating homebrew, vim plugins, haxelib, and rvm "; brew update; sh ~/.bin/update_vim_plugins.sh; haxelib upgrade; rvm get stable;
 else
    echo "fine";
 fi
@@ -344,19 +353,37 @@ export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 #Mono Path
 export MONO_GAC_PREFIX="/usr/local"
 
-eval "$(homework setup -)"
 
-source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. `brew --prefix`/etc/profile.d/z.sh
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 rails-t () {
   rails new $1 -d=postgresql -m https://raw.githubusercontent.com/tiy-austin-ror-may2015/tiy-template/master/template.rb
 }
 
+new-luxe () {
+  cp -r /usr/local/Cellar/haxe/3.1.2/lib/haxe/lib/luxe/git/samples/empty $1 && cd $1 && echo "Done"
+}
+alias proj.luxe='new-luxe $1'
+
 # Remove right prompt
 export RPROMPT=''
 export COMMAND_PROMPT='hi'
 
-export PATH=~/bin:$PATH
+
+alias ez='vim ~/.zshrc'
+alias sz='source ~/.zshrc; echo "zshrc reloaded"'
+
+alias tiy='cd ~/theironyard'
+
+export PATH=~/bin:$PATH # Add local bin directory
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+export PATH="$PATH:/usr/local/opt/llvm/bin/"
+export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
+export PATH=~/bin:/Users/Justin/.rvm/gems/ruby-2.2.3/bin:/Users/Justin/.rvm/gems/ruby-2.2.3@global/bin:/Users/Justin/.rvm/rubies/ruby-2.2.3/bin:/Users/Justin/.rvm/bin:$PATH
+
+source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. `brew --prefix`/etc/profile.d/z.sh
+
+

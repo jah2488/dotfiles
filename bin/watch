@@ -3,10 +3,9 @@ Files      = Struct.new(:meth, :files)
 LIB        = Files.new(:lib,     Dir['lib/**/**/**'])
 SPECS      = Files.new(:spec,    Dir['spec/**/**/**'])
 FEATURES   = Files.new(:feature, Dir['features/**/**/**'])
-SLEEP_TIME = 1
+SLEEP_TIME = 0.15
 
 Signal.trap("INT") {
-  puts "Goodbye"
   exit
 }
 
@@ -68,7 +67,6 @@ def mtime(obj)
   obj.files.map { |f| File.mtime(f) }
 end
 
-
 i=3
 loop do
   i = 1 if i > SLEEP_TIME; print "Waiting#{'.'*i}\r"; STDOUT.flush
@@ -80,5 +78,3 @@ loop do
   i+=1
   sleep(SLEEP_TIME)
 end
-
-

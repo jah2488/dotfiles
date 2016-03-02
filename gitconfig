@@ -4,7 +4,7 @@
   pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
 [user]
 	name = Justin Herrick
-	email = justin@theironyard.com
+	email = justin@justinherrick.com
 
 [color]
 	ui = auto
@@ -32,6 +32,7 @@
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
 [core]
 	excludesfile = /Users/jherrick/.gitignore_global
+	editor = vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -42,3 +43,7 @@
 	whitespace = nowarn
 [credential]
 	helper = osxkeychain
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
