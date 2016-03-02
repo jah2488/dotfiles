@@ -11,7 +11,7 @@ export VISUAL='vim'
 alias vim="mvim -v"
 alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
 
-
+# Make nested directories and cd into them.
 mkdircd() {
   mkdir -p -- "$1" && cd -P -- "$1"
 }
@@ -46,7 +46,6 @@ gt() {
 
 source $ZSH/oh-my-zsh.sh
 
-#source ~/._rust
 
 # Customize to your needs...
 fpath=(~/.zsh/completion $fpath)
@@ -99,7 +98,7 @@ setopt prompt_subst
 #ALL THE COLORS
 export TERM='xterm-256color'
 
-# POWERLINE ZSH THEME
+# POWERLINE ZSH THEME (goodnight sweet prince)
 #function powerline_precmd() {
 #  export PS1="$(~/.zsh/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
 #}
@@ -163,6 +162,7 @@ setopt HIST_FIND_NO_DUPS
 
 #}}}
 
+# Android dev stuff
 export PATH=$PATH:~/android/android-sdk-macosx/tools
 export PATH=$PATH:~/android/android-sdk-macosx/platform-tools
 export ANDROID_HOME=~/android/android-sdk-macosx
@@ -265,23 +265,28 @@ vfind() {
   vim -o `find . -name $*`
 }
 
+# Serve the current directory up as a website
 serve() {
   port="${1:-9000}"
   ruby -run -e httpd . -p $port
 }
 
+# Give me all the history
 hist-log() {
   tail -f ~/.history | sed 's/^.*;/ /'
 }
 
+# Last command
 last-out() {
   tail -n 1 ~/.hist-out
 }
 
+# Display an animated gif on the command line
 anim-img() {
   clear && mkdir /tmp/anim-img && convert -coalesce $1 /tmp/anim-img/out%05d.png && for f in /tmp/anim-img/*; do printf '\e[H'; imgcat $f; done && rm -rf /tmp/anim-img/
 }
 
+# Mkdir and cd into it
 mkcd() {
   mkdir -p $1 && cd $1
 }
@@ -300,6 +305,7 @@ show-desktop() {
   defaults write com.apple.finder CreateDesktop -bool true && killall Finder;
 }
 
+# useful aliases (kinda)
 alias chrome='/usr/bin/open -a "/Applications/Google Chrome.app"'
 alias themoreyouknow="chrome 'http://ak-hdl.buzzfed.com/static/2015-02/1/20/enhanced/webdr02/anigif_enhanced-buzz-20392-1422840785-34.gif'"
 alias tmyk='themoreyouknow'
