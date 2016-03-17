@@ -1,12 +1,13 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
 ZSH_THEME="avit"
+
+# use vim as an editor
 export VISUAL='vim'
+export EDITOR=vim
+
+
 
 alias vim="mvim -v"
 alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
@@ -16,36 +17,12 @@ mkdircd() {
   mkdir -p -- "$1" && cd -P -- "$1"
 }
 
-# What week/day in the cohort are we
-export COHORT='feb'
-export WEEK='1'
-export DAY='1'
-
-set-today() {
-  export WEEK=$1
-  export DAY=$2
-}
-set-week() {
-  export WEEK=$1
-}
-set-day() {
-  export DAY=$1
-}
-gtd() {
-  mkdircd ${HOME}'/theironyard/'${COHORT}'/week'${WEEK}'/day'${DAY}'/'
-}
-gt() {
-  mkdircd ${HOME}'/theironyard/'${COHORT}'/week'$1'/day'$2'/'
-}
-
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 #plugins=(git rails ruby osx brew compleat cp gem vi-mode)
 
 source $ZSH/oh-my-zsh.sh
-
 
 # Customize to your needs...
 fpath=(~/.zsh/completion $fpath)
@@ -62,9 +39,6 @@ compinit
 
 # automatically enter directories without cd
 #setopt auto_cd
-
-# use vim as an editor
-export EDITOR=vim
 
 # aliases
 if [ -e "$HOME/.aliases" ]; then
@@ -94,7 +68,6 @@ bindkey '\e[B' history-search-forward
 # expand functions in the prompt
 setopt prompt_subst
 
-
 #ALL THE COLORS
 export TERM='xterm-256color'
 
@@ -113,7 +86,6 @@ export TERM='xterm-256color'
 #}
 #
 #install_powerline_precmd
-
 
 
 #{{{ History Stuff
@@ -197,6 +169,25 @@ proj.rb() {
   touch spec/spec_helper.rb
 }
 
+#make elm project scaffold
+proj.elm() {
+  mkdir src test;
+  touch README.md
+  touch Main.elm
+  cat <<EOF > Main.elm
+import Graphics.Collage exposing (..)
+import Graphics.Element exposing (..)
+
+main : Element
+main =
+    collage 200 200
+        [ rotate (degrees 20) (toForm (show "Hello World!")) ]
+EOF
+  elm-reactor &
+  open http://localhost:8000/Main.elm
+  %
+}
+
 
 #Get size of given directory
 #no directory given defaults to current directory;
@@ -210,6 +201,8 @@ sizeOf() {
 }
 
 #Execute code inside rails console then exit.
+# - This is silly and not needed, but expect -c is awesome
+# - Keeping it so I don't forget expect works
 rce() {
   expect -c "
     spawn rails c
@@ -218,22 +211,6 @@ rce() {
     expect -re \".? >.?\";
     send \"exit\r\n\";
     set timeout -1;"
-}
-
-#Create Command based on last command
-new_command() {
-  if [ "${@[-1]}" = "" ]
-    then
-      echo "Command needs a name"
-    else
-      if [ "${@[-2]}" = "" ]
-        then
-          echo "Command body needed"
-        else
-          echo ${@}
-          (echo -e '#!/bin/bash\n'${@[-2]} > ~/bin/"${@[-1]}") && chmod 755 ~/bin/"${@[-1]}"
-      fi
-  fi
 }
 
 #find all routes with
@@ -375,21 +352,18 @@ alias proj.luxe='new-luxe $1'
 export RPROMPT=''
 export COMMAND_PROMPT='hi'
 
-
 alias ez='vim ~/.zshrc'
 alias sz='source ~/.zshrc; echo "zshrc reloaded"'
 
-alias tiy='cd ~/theironyard'
+alias tiy='cd ~/tiy'
 
 export PATH=~/bin:$PATH # Add local bin directory
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
+#export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 export PATH="$PATH:/usr/local/opt/llvm/bin/"
 export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
-export PATH=~/bin:/Users/Justin/.rvm/gems/ruby-2.2.3/bin:/Users/Justin/.rvm/gems/ruby-2.2.3@global/bin:/Users/Justin/.rvm/rubies/ruby-2.2.3/bin:/Users/Justin/.rvm/bin:$PATH
-
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . `brew --prefix`/etc/profile.d/z.sh
-
 

@@ -71,6 +71,8 @@ alias tm='cd ~/theironyard/may'
 alias ta='cd ~/theironyard/aug'
 alias h='cd ~/theironyard/homework'
 alias p='cd ~/projects'
+alias glc='cd ~/LunarCollective'
+alias work='cd ~/LunarCollective/projects'
 alias g='cd ~/projects/games'
 alias c='cd ~/projects/theironyard/products/classroom'
 alias s='cd ~/projects/theironyard/screencasts'
@@ -86,7 +88,7 @@ alias ssh-lsm-redis="ssh -i "LSM-Key.pem" ubuntu@54.86.27.170"
 alias ssh-lsm-node="ssh -i "LSM-Key.pem" ubuntu@54.172.0.198"
 
 alias findit='find . | xargs grep -l'
-alias fg='find . | xargs grep -Csr 3'
+alias findgrep='find . | xargs grep -Csr 3'
 alias sz='source ~/.zshrc'
 alias ez='vim ~/.zshrc'
 alias ev='vim ~/.vimrc'
