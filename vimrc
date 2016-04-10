@@ -478,3 +478,18 @@ if !exists("my_auto_commands_loaded")
 
 "vim-detailed
 colo detailed
+
+
+
+autocmd GuiEnter * set background&
+
+set ttimeoutlen=100
+set ttyfast
+set lazyredraw
+
+:au CursorMoved
+autocmd BufReadPost quickfix map <buffer> <leader>qq :cclose<cr>|map <buffer> <c-p> <up>|map <buffer> <c-n> <down>
+set synmaxcol=120
+set nocursorline
+set re=1
+:redraw

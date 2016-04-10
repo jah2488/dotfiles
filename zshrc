@@ -305,9 +305,6 @@ _open-app_complete() {
 compctl -K _open-app_complete open-app
 #} open-app Completions
 
-
-#local bin/git
-export PATH=~/.bin:~/.bin/git-2.2.1:$PATH
 #Haskell
 export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
 #ANTLR
@@ -318,7 +315,7 @@ export PATH=~/.cabal/bin:$PATH
 echo "Update Plugins? (y/n) "
 read   RESPONSE
 if [ "$RESPONSE" = "y" ]; then
-   echo "Updating homebrew, vim plugins, haxelib, and rvm "; brew update; sh ~/.bin/update_vim_plugins.sh; haxelib upgrade; rvm get stable;
+   echo "Updating homebrew, vim plugins, atom plugins, and rvm "; brew update; sh ~/.bin/update_vim_plugins.sh; apm update #haxelib upgrade; rvm get stable;
 else
    echo "fine";
 fi
@@ -339,8 +336,8 @@ export MONO_GAC_PREFIX="/usr/local"
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
-rails-t () {
-  rails new $1 -d=postgresql -m https://raw.githubusercontent.com/tiy-austin-ror-may2015/tiy-template/master/template.rb
+tiybe () {
+  rails new $1 -d postgresql -m https://raw.githubusercontent.com/tiy-austin-ror/template/master/template.rb
 }
 
 new-luxe () {

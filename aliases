@@ -61,22 +61,23 @@ alias db-pull-production='heroku db:pull --remote production --confirm `basename
 alias db-copy-production-to-staging='heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote staging  --confirm `basename $PWD`-staging'
 alias db-backup-production='heroku pgbackups:capture --remote production'
 
-#work
-alias fcor='cd ~/Adept/patriots_fcor'
+# 🌙  Lunar Collective 🚀
+alias work='cd ~/LunarCollective/projects'
+alias ir='cd ~/LunarCollective/invent/invent-rails'
+alias ch='cd ~/LunarCollective/chekhov'
+alias prov='cd ~/LunarCollective/provisions'
 
 # Custom
 alias Trash='cd ~/.Trash/'
 alias parrot="cd ~/projects/parrot"
 alias tm='cd ~/theironyard/may'
 alias ta='cd ~/theironyard/aug'
-alias h='cd ~/theironyard/homework'
+alias h='cd ~/tiy/homework'
 alias p='cd ~/projects'
 alias glc='cd ~/LunarCollective'
-alias work='cd ~/LunarCollective/projects'
 alias g='cd ~/projects/games'
 alias c='cd ~/projects/theironyard/products/classroom'
 alias s='cd ~/projects/theironyard/screencasts'
-alias ir='cd ~/projects/invent/invent-rails'
 alias tiy='cd ~/theironyard'
 alias tir='echo "tiy-austin-ror"'
 alias note='echo "$1" >> readme.md'
