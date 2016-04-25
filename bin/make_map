@@ -6,7 +6,7 @@ class MapMaker
 
   def initialize()
     @mapArray   = Hash.new
-    @randomSeed = 0.58 #0.447 #347   #Goog acappellago 0.48  # Good island size > 0.447
+    @randomSeed = 0.447 #0.447 #347   #Goog acappellago 0.48  # Good island size > 0.447
     @mapCols    = 0
     @mapRows    = 0
     @wall       = '#'

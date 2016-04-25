@@ -413,10 +413,10 @@ let g:syntastic_enable_signs=1
 let g:syntastic_echo_current_error=1
 let g:syntastic_enable_balloons = 1
 
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['jsxhint']
 
 let g:syntastic_error_symbol='✘'
-let g:syntastic_warning_symbol='⇒'
+let g:syntastic_warning_symbol='>'
 
 "Control-P
 let g:ctrlp_map = '<c-p>'

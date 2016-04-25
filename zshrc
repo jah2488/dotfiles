@@ -345,6 +345,19 @@ new-luxe () {
 }
 alias proj.luxe='new-luxe $1'
 
+
+
+# Load up any directory specific aliases on cd
+local_alias_loader_function() {
+  [ -f .local.aliases ] && source .local.aliases
+  # Relevant sources
+  # # http://zsh.sourceforge.net/Doc/Release/Functions.html
+  # NOTE: Aliases are not 'unloaded' when leaving a diretory, could lead to problems.
+}
+add-zsh-hook chpwd local_alias_loader_function
+
+
+
 # Remove right prompt
 export RPROMPT=''
 export COMMAND_PROMPT='hi'
