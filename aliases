@@ -12,6 +12,8 @@ alias -g L='| wc -l'
 alias -g ONE="| awk '{ print \$1}'"
 alias du='du -h'
 
+alias tree='tree -L 3'
+
 # git
 alias g="git"
 alias gci="git pull --rebase && rake && git push"

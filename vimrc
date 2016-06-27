@@ -113,6 +113,12 @@ autocmd BufNewFile,BufRead *.ws   set filetype=clojure
 autocmd BufNewFile,BufRead *.cljs   set filetype=clojure
 autocmd BufNewFile,BufRead *.hiccup set filetype=clojure
 
+"Treat ES6 files as Javascript
+autocmd BufNewFile,BufRead *.es6    set filetype=javascript
+autocmd BufNewFile,BufRead *.esnext set filetype=javascript
+
+
+
 "Treat javascript template files like html
 autocmd BufNewFile,BufRead *.ejs set filetype=html
 autocmd BufNewFile,BufRead *.hbs set filetype=html
@@ -404,6 +410,8 @@ nmap <buffer> <S-C-J> <Plug>(xmpfilter-mark)
 xmap <buffer> <S-C-J> <Plug>(xmpfilter-mark)
 imap <buffer> <S-C-J> <Plug>(xmpfilter-mark)
 
+let g:elm_format_autosave = 1
+
 
 " Syntastic settings
 let g:syntastic_ruby_checkers=['mri']
@@ -417,6 +425,11 @@ let g:syntastic_javascript_checkers = ['jsxhint']
 
 let g:syntastic_error_symbol='✘'
 let g:syntastic_warning_symbol='>'
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+
+let g:elm_syntastic_show_warnings = 1
 
 "Control-P
 let g:ctrlp_map = '<c-p>'

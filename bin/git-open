@@ -16,6 +16,6 @@ exec /usr/bin/env ruby --disable-gems -x "$0" $*
 remote = `git remote -v`
 unless remote.empty?
   url_pieces = remote.scan(/github\.com:(.*)\.git/)
-  url = "https://github.com/#{url_pieces.first.first}"
+  url = "https://github.com/#{url_pieces.first.first}/tree/#{`git symbolic-ref --short HEAD`}"
   `open #{url}`
 end
