@@ -489,11 +489,6 @@ if !exists("my_auto_commands_loaded")
     augroup END
   endif
 
-"vim-detailed
-colo detailed
-
-
-
 autocmd GuiEnter * set background&
 
 set ttimeoutlen=100

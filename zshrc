@@ -1,16 +1,12 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="avit"
+ZSH_THEME="miloshadzic"
 
 # use vim as an editor
 export VISUAL='vim'
 export EDITOR=vim
 
-
-
-alias vim="mvim -v"
-alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
 
 # Make nested directories and cd into them.
 mkdircd() {
@@ -20,9 +16,11 @@ mkdircd() {
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-#plugins=(git rails ruby osx brew compleat cp gem vi-mode)
+plugins=(git osx compleat cp vi-mode)
 
 source $ZSH/oh-my-zsh.sh
+
+source ~/dotfiles/elm-bash-completion/_elm_package.sh
 
 # Customize to your needs...
 fpath=(~/.zsh/completion $fpath)
@@ -38,7 +36,7 @@ autoload -U compinit
 compinit
 
 # automatically enter directories without cd
-#setopt auto_cd
+setopt auto_cd
 
 # aliases
 if [ -e "$HOME/.aliases" ]; then
@@ -72,19 +70,19 @@ setopt prompt_subst
 export TERM='xterm-256color'
 
 # POWERLINE ZSH THEME (goodnight sweet prince)
-#function powerline_precmd() {
-#  export PS1="$(~/.zsh/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
-#}
-#
-#function install_powerline_precmd() {
-#  for s in "${precmd_functions[@]}"; do
-#    if [ "$s" = "powerline_precmd" ]; then
-#      return
-#    fi
-#  done
-#  precmd_functions+=(powerline_precmd)
-#}
-#
+function powerline_precmd() {
+  export PS1="$(~/.zsh/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
+}
+
+function install_powerline_precmd() {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
+    fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
 #install_powerline_precmd
 
 
@@ -112,8 +110,7 @@ setopt HIST_IGNORE_DUPS
 setopt histignoredups
 
 # Even if there are commands inbetween commands that are the same, still only save the last one
-# For dealing with students I may want repeats out of order
-# setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 
 # Pretty    Obvious.  Right?
 setopt HIST_REDUCE_BLANKS
@@ -133,11 +130,6 @@ setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS
 
 #}}}
-
-# Android dev stuff
-export PATH=$PATH:~/android/android-sdk-macosx/tools
-export PATH=$PATH:~/android/android-sdk-macosx/platform-tools
-export ANDROID_HOME=~/android/android-sdk-macosx
 
 # look for ey config in project dirs
 export EYRC=./.eyrc
@@ -169,26 +161,6 @@ proj.rb() {
   touch spec/spec_helper.rb
 }
 
-#make elm project scaffold
-proj.elm() {
-  mkdir src test;
-  touch README.md
-  touch Main.elm
-  cat <<EOF > Main.elm
-import Graphics.Collage exposing (..)
-import Graphics.Element exposing (..)
-
-main : Element
-main =
-    collage 200 200
-        [ rotate (degrees 20) (toForm (show "Hello World!")) ]
-EOF
-  elm-reactor &
-  open http://localhost:8000/Main.elm
-  %
-}
-
-
 #Get size of given directory
 #no directory given defaults to current directory;
 sizeOf() {
@@ -198,19 +170,6 @@ sizeOf() {
     else
       du -sh "$*"
   fi
-}
-
-#Execute code inside rails console then exit.
-# - This is silly and not needed, but expect -c is awesome
-# - Keeping it so I don't forget expect works
-rce() {
-  expect -c "
-    spawn rails c
-    expect -re \".? >.?\";
-    send \"$*\r\n\";
-    expect -re \".? >.?\";
-    send \"exit\r\n\";
-    set timeout -1;"
 }
 
 #find all routes with
@@ -273,6 +232,11 @@ cat-md() {
   cat $1 | nd
 }
 
+gi() {
+  to_run="$1"
+  git "${to_run:1}"
+}
+
 #Hide all desktop icons/files/folders
 hide-desktop() {
   defaults write com.apple.finder CreateDesktop -bool false && killall Finder;
@@ -282,8 +246,13 @@ show-desktop() {
   defaults write com.apple.finder CreateDesktop -bool true && killall Finder;
 }
 
+alias lockscreen='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+alias shutdown='sudo shutdown -h +20'
+alias shutdown-now='sudo shutdown -r now'
+
 # useful aliases (kinda)
 alias chrome='/usr/bin/open -a "/Applications/Google Chrome.app"'
+alias canary="/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary"
 alias themoreyouknow="chrome 'http://ak-hdl.buzzfed.com/static/2015-02/1/20/enhanced/webdr02/anigif_enhanced-buzz-20392-1422840785-34.gif'"
 alias tmyk='themoreyouknow'
 
@@ -311,11 +280,17 @@ export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
 export CLASSPATH=".:/usr/local/lib/antlr-4.1-complete.jar:$CLASSPATH"
 #Elm
 export PATH=~/.cabal/bin:$PATH
+#FSharp
+export MONO_GAC_PREFIX="/usr/local"
+#Go
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+unalias go
+alias go=/usr/local/bin/go
 
 echo "Update Plugins? (y/n) "
 read   RESPONSE
 if [ "$RESPONSE" = "y" ]; then
-   echo "Updating homebrew, vim plugins, atom plugins, and rvm "; brew update; sh ~/.bin/update_vim_plugins.sh; apm update #haxelib upgrade; rvm get stable;
+   echo "Updating homebrew, vim plugins, atom plugins, and rvm "; brew update; sh ~/.bin/update_vim_plugins.sh; opam update; apm update #haxelib upgrade; rvm get stable;
 else
    echo "fine";
 fi
@@ -333,39 +308,14 @@ export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 #Mono Path
 export MONO_GAC_PREFIX="/usr/local"
 
-
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
-
-tiybe () {
-  rails new $1 -d postgresql -m https://raw.githubusercontent.com/tiy-austin-ror/template/master/template.rb
-}
-
-new-luxe () {
-  cp -r /usr/local/Cellar/haxe/3.1.2/lib/haxe/lib/luxe/git/samples/empty $1 && cd $1 && echo "Done"
-}
-alias proj.luxe='new-luxe $1'
-
-
-
-# Load up any directory specific aliases on cd
-local_alias_loader_function() {
-  [ -f .local.aliases ] && source .local.aliases
-  # Relevant sources
-  # # http://zsh.sourceforge.net/Doc/Release/Functions.html
-  # NOTE: Aliases are not 'unloaded' when leaving a diretory, could lead to problems.
-}
-add-zsh-hook chpwd local_alias_loader_function
-
 
 
 # Remove right prompt
-export RPROMPT=''
-export COMMAND_PROMPT='hi'
+export COMMAND_PROMPT='you should never see me'
 
 alias ez='vim ~/.zshrc'
 alias sz='source ~/.zshrc; echo "zshrc reloaded"'
-
-alias tiy='cd ~/tiy'
 
 export PATH=~/bin:$PATH # Add local bin directory
 export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
@@ -378,5 +328,9 @@ export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PA
 
 if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
 
-source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-. `brew --prefix`/etc/profile.d/z.sh
+source ~/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+eval $(opam config env)
+opam switch 4.02.3
+

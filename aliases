@@ -12,12 +12,14 @@ alias -g L='| wc -l'
 alias -g ONE="| awk '{ print \$1}'"
 alias du='du -h'
 
-alias tree='tree -L 3'
+alias uh='history | grep $1'
+
+alias tree='tree -I "node_modules|bower_components|elm-stuff|cache|pids|tmp" -L 5'
 
 # git
 alias g="git"
+alias gs="git status"
 alias gci="git pull --rebase && rake && git push"
-alias go='git open'
 
 # Langs
 alias rb='ruby'
@@ -35,7 +37,7 @@ alias s="bundle exec rspec"
 alias cuc="bundle exec cucumber"
 
 # Rubygems
-alias gi="gem install"
+#alias gi="gem install"
 alias giv="gem install -v"
 
 # Rails
@@ -85,10 +87,10 @@ alias tir='echo "tiy-austin-ror"'
 alias note='echo "$1" >> readme.md'
 alias mit='cd ~/Desktop/jherrick-old/8thLight/mit'
 
+alias fix-camera="sudo killall VDCAssistant"
 
-# EC2
-alias ssh-lsm-redis="ssh -i "LSM-Key.pem" ubuntu@54.86.27.170"
-alias ssh-lsm-node="ssh -i "LSM-Key.pem" ubuntu@54.172.0.198"
+
+alias sup="echo 'nmu?'"
 
 alias findit='find . | xargs grep -l'
 alias findgrep='find . | xargs grep -Csr 3'

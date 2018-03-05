@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 Files      = Struct.new(:meth, :files)
+APP        = Files.new(:app,     Dir['app/**/**/**'])
 LIB        = Files.new(:lib,     Dir['lib/**/**/**'])
 SPECS      = Files.new(:spec,    Dir['spec/**/**/**'])
 FEATURES   = Files.new(:feature, Dir['features/**/**/**'])
-SLEEP_TIME = 0.15
+SLEEP_TIME = 0.05
 
 Signal.trap("INT") {
   exit
@@ -18,6 +19,12 @@ end
 
 def lib(index)
   file = LIB.files[index]
+  spec = SPECS.files.find { |f| !!(has_related?(file, f, ".rb", "_spec.rb")) }
+  runner :file => file, :run => spec
+end
+
+def app(index)
+  file = APP.files[index]
   spec = SPECS.files.find { |f| !!(has_related?(file, f, ".rb", "_spec.rb")) }
   runner :file => file, :run => spec
 end
@@ -71,7 +78,7 @@ i=3
 loop do
   i = 1 if i > SLEEP_TIME; print "Waiting#{'.'*i}\r"; STDOUT.flush
 
-  [FEATURES, SPECS, LIB].each do |x|
+  [APP, FEATURES, SPECS, LIB].each do |x|
     run(x)
   end
 
