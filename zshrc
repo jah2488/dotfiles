@@ -7,6 +7,7 @@ ZSH_THEME="miloshadzic"
 export VISUAL='vim'
 export EDITOR=vim
 
+alias emacs=/usr/local/Cellar/emacs-plus/HEAD-83a6224/bin/emacs
 
 # Make nested directories and cd into them.
 mkdircd() {
@@ -19,8 +20,6 @@ mkdircd() {
 plugins=(git osx compleat cp vi-mode)
 
 source $ZSH/oh-my-zsh.sh
-
-source ~/dotfiles/elm-bash-completion/_elm_package.sh
 
 # Customize to your needs...
 fpath=(~/.zsh/completion $fpath)
@@ -68,23 +67,6 @@ setopt prompt_subst
 
 #ALL THE COLORS
 export TERM='xterm-256color'
-
-# POWERLINE ZSH THEME (goodnight sweet prince)
-function powerline_precmd() {
-  export PS1="$(~/.zsh/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
-}
-
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
-#install_powerline_precmd
-
 
 #{{{ History Stuff
 
@@ -148,11 +130,6 @@ setopt CORRECT CORRECT_ALL
 
 # Enable extended globbing
 setopt EXTENDED_GLOB
-
-# Homebrew Autocomplete
-fpath=($HOME/.zsh/func $fpath)
-typeset -U fpath
-
 
 #make ruby project scaffold
 proj.rb() {
@@ -276,24 +253,13 @@ compctl -K _open-app_complete open-app
 
 #Haskell
 export PATH=~/.bin:/usr/local/bin:/usr/local/sbin:~/Library/Haskell/bin:$PATH
+
 #ANTLR
 export CLASSPATH=".:/usr/local/lib/antlr-4.1-complete.jar:$CLASSPATH"
-#Elm
-export PATH=~/.cabal/bin:$PATH
+
 #FSharp
 export MONO_GAC_PREFIX="/usr/local"
-#Go
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
-unalias go
-alias go=/usr/local/bin/go
 
-echo "Update Plugins? (y/n) "
-read   RESPONSE
-if [ "$RESPONSE" = "y" ]; then
-   echo "Updating homebrew, vim plugins, atom plugins, and rvm "; brew update; sh ~/.bin/update_vim_plugins.sh; opam update; apm update #haxelib upgrade; rvm get stable;
-else
-   echo "fine";
-fi
 
 # Pump up the ruby vm
 export RUBY_GC_HEAP_INIT_SLOTS=1000000
@@ -309,7 +275,6 @@ export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 export MONO_GAC_PREFIX="/usr/local"
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
-
 
 # Remove right prompt
 export COMMAND_PROMPT='you should never see me'
@@ -330,7 +295,15 @@ if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
 
 source ~/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-eval $(opam config env)
-opam switch 4.02.3
+echo "Update Plugins? (y/n) "
+read   RESPONSE
+if [ "$RESPONSE" = "y" ]; then
+   echo "Updating homebrew, vim plugins, atom plugins, and rvm "; brew update; sh ~/.bin/update_vim_plugins.sh; opam update; apm update #haxelib upgrade; rvm get stable;
+else
+   echo "fine";
+fi
 

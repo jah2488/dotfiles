@@ -32,6 +32,7 @@ alias help-strftime='ruby ~/bin/help-strftime.rb'
 # Bundler
 alias b="bundle"
 alias be="bundle exec"
+alias ber="bundle exec rspec"
 alias bake="bundle exec rake"
 alias s="bundle exec rspec"
 alias cuc="bundle exec cucumber"
@@ -103,6 +104,8 @@ alias mk=popd
 alias puts='man -t "$1" | open -f -a Preview'
 
 alias rake='noglob rake'
+
+alias rpg='cd ~/LunarCollective/products/rpgmarket'
 
 # ANTLR4
 alias grun='java org.antlr.v4.runtime.misc.TestRig'

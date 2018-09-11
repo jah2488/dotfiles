@@ -22,9 +22,16 @@ def App(name, opts = [])
   Package.new("brew cask", name, opts)
 end
 
+def Node(name, opts = [])
+  Package.new("npm -g", name, opts)
+end
+
+def Atom(name, opts = [])
+  Package.new("apm", name, opts)
+end
+
 
 APPS = [
-  App("hyper"),
   App("google-chrome"),
   App("1password"),
   App("elm-platform"),
@@ -43,6 +50,7 @@ BINS = [
   Bin(:phantomjs),
   Bin(:rust),
   Bin(:sqlite),
+  Bin(:postgresql),
   Bin(:tmux),
   Bin(:tree),
   Bin(:ack),
@@ -59,6 +67,32 @@ BINS = [
   ])
 ]
 
-BINS.each(&:install!)
-APPS.each(&:install!)
+PACKAGES = [
+  Node("create-elm-app"),
+  Node("elm-format"),
+  Node("jest"),
+  Node("react"),
+  Node("prettier"),
+  Atom("atom-beautify"),
+  Atom("atom-elixir"),
+  Atom("atom-elixir-formatter"),
+  Atom("cucumber"),
+  Atom("elm-format"),
+  Atom("elmjutsu"),
+  Atom("hyperclick"),
+  Atom("intentions"),
+  Atom("language-elixir"),
+  Atom("language-elm"),
+  Atom("language-slim"),
+  Atom("linter"),
+  Atom("linter-ui-default"),
+  Atom("prettier-atom"),
+  Atom("react"),
+  Atom("teletype"),
+  Atom("vim-mode-plus")
+]
+
+[BINS, APPS, PACKAGES].each do |sets|
+  sets.each(&:install!)
+end
 
